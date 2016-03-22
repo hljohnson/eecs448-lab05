@@ -34,8 +34,9 @@
         echo "<script> alert('Username already exists!') </script>";
       }
 
+      echo "Return to the last page using the back button!";
       /* close connection */
-      //$mysqli->close();
+      $mysqli->close();
     }
   }
 

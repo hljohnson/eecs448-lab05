@@ -29,9 +29,10 @@
       else {
         // alert user that user was NOT created successfully
         echo "<script> alert('Post not created!') </script>";
+	       echo mysqli_error($mysqli);
       }
     }
-
+    echo "Return to the last page using the back button!";
   }
   /* close connection */
   $mysqli->close();
