@@ -1,7 +1,74 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-</head>
-<body>
-</body>
+  <head>
+    <title>Delete Post</title>
+
+    <!-- ***All of the following is related to using the Boostrap CSS Framework*** -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+      <!-- Imbed php to enable accurate dropdown menu -->
+      <div class = "container">
+	       <div class = "col-xs-4">
+          <h3 class = "form-signin-heading">Delete Post</h3>
+
+      	  <form action = "DeletePost.php" method = "post">
+              <?php
+  	          // Connect to database
+  	           $mysqli = new mysqli("mysql.eecs.ku.edu", "hjohnson", "mypassword", "hjohnson");
+
+  		        if ($mysqli->connect_errno) {
+  		            printf("Connection Failed: %s\n", $mysqli->connect_error);
+  		            exit();
+  	          }
+
+              echo "<table>";
+                echo"<tr>";
+                  echo"<th>Delete?</th><th>Posts</th><th>Authors</th>";
+                echo"</tr>";
+
+            		// Query ALL posts from Posts table in database
+            		$posts = $mysqli->query("SELECT * FROM Posts");
+
+                // Iterate through every post
+                while($row = mysqli_fetch_array($posts)) {
+                  // Extract the current "row"'s post, author id, and post id into php variables
+                  $post = $row['content'];
+                  $author = $row['author_id'];
+                  $postID = $row['post_id'];
+
+                  // Create row for every post incuding checkbox option to delete specific post
+                  echo "<tr><td><input value=".$postID." type='checkbox' name = 'check_list[]'></td>
+                  <td>".$post."</td><td>".$author."</td></tr>";
+
+                }// End while
+
+                echo "</table>";
+
+    	          // Close connection with database
+    	          $mysqli->close();
+    	          ?>
+
+            <!-- Submit button -->
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name = "submit">Submit</button>
+       	 </form>
+       </div>
+    </div>
+
+  </body>
 </html>
